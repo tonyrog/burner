@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF8">
+    <title>Burn</title>
+  </head>
+  <body>
+    <!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->    
+  </body>
+</html>
