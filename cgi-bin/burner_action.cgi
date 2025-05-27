@@ -11,9 +11,8 @@
 %%-module(burner_action).
 -export([main/1]).
 
-%% -define(BURNER_CONFIG, "/var/www/data/burner.config").
-%% mac os
--define(BURNER_CONFIG, "/Library/WebServer/data/burner.config").
+-define(BURNER_CONFIG_LINUX, "/var/www/data/burner.config").
+-define(BURNER_CONFIG_MACOS, "/Library/WebServer/data/burner.config").
 
 -define(DOMAIN, "rogvall.se").
 %%-define(TMP1, "/var/www/data/tmp1.txt").
@@ -23,11 +22,11 @@ main([]) ->
     Query = os:getenv("QUERY_STRING"),
     case Query of
 	false ->
-	    list_config(?BURNER_CONFIG, 
+	    list_config(burner_config(), 
 			{error,"1,missing alias"}),
 	    erlang:halt(0);
 	[] ->
-	    list_config(?BURNER_CONFIG, 
+	    list_config(burner_config(), 
 			{error,"2,missing alias"}),
 	    erlang:halt(0);
 	_ ->
@@ -41,7 +40,7 @@ main(Query) ->
     run(Options).
 
 run(Options) ->
-    Config = load_config(?BURNER_CONFIG),
+    Config = load_config(burner_config()),
     case proplists:get_value("action",Options) of
 	"list" ->
 	    list_table(standard_io, ok, Config),
@@ -49,7 +48,7 @@ run(Options) ->
 	"add" ->
 	    case proplists:get_value("alias", Options) of
 		undefined ->
-		    list_config(?BURNER_CONFIG,
+		    list_config(burner_config(),
 				{error,"3,missing alias"});
 		Alias ->
 		    case find_alias(Alias, Config) of
@@ -62,52 +61,60 @@ run(Options) ->
 						  password => "",
 						  comment => ""}),
 			    Config1 = Config ++ [Entry],
-			    ok = save_config(?BURNER_CONFIG, Config1),
-			    list_config(?BURNER_CONFIG, ok),
+			    ok = save_config(burner_config(), Config1),
+			    list_config(burner_config(), ok),
 			    erlang:halt(0);
 			_Entry ->
-			    list_config(?BURNER_CONFIG, 
+			    list_config(burner_config(), 
 					{error,"alias already exists"})
 		    end
 	    end;
 	"del" ->
 	    case proplists:get_value("alias", Options) of
 		undefined ->
-		    list_config(?BURNER_CONFIG,
+		    list_config(burner_config(),
 				{error,"4,missing alias"});
 		Alias ->
 		    case find_alias(Alias, Config) of
 			false ->
-			    list_config(?BURNER_CONFIG,
+			    list_config(burner_config(),
 					{error,"alias do not exist"});
 			_ ->
 			    Config1 = delete_alias(Alias, Config),
-			    ok = save_config(?BURNER_CONFIG, Config1),
-			    list_config(?BURNER_CONFIG, ok)
+			    ok = save_config(burner_config(), Config1),
+			    list_config(burner_config(), ok)
 		    end
 	    end;
 	"mod" ->
 	    case proplists:get_value("alias", Options) of
 		undefined ->
-		    list_config(?BURNER_CONFIG,
+		    list_config(burner_config(),
 				{error,"5,missing alias"});
 		Alias ->
 		    case find_alias(Alias, Config) of
 			false ->
-			    list_config(?BURNER_CONFIG,
+			    list_config(burner_config(),
 					{error,"alias do not exist"});
 			_ ->
 			    Config1 = modify_alias(Alias, Options, Config),
-			    Status = save_config(?BURNER_CONFIG, Config1),
-			    list_config(?BURNER_CONFIG, Status)
+			    Status = save_config(burner_config(), Config1),
+			    list_config(burner_config(), Status)
 		    end
 	    end;
 	_ ->
-	    list_config(?BURNER_CONFIG,
+	    list_config(burner_config(),
 			{error,"unknown action"})
     end,
     erlang:halt(0).
 
+
+burner_config() ->
+    case os:type() of
+	{unix, linux} ->
+	    ?BURNER_CONFIG_LINUX;
+	{unix, darwin} ->
+	    ?BURNER_CONFIG_MACOS
+    end.
 
 string_to_unicode(Arg) ->
     BinArg = list_to_binary(Arg),
@@ -180,13 +187,8 @@ list_config(Filename, Status) ->
 list_table(Fd, Status, Config) ->
     io:format(Fd, "Content-type: text/html\r\n\r\n", []),
     io:format(Fd, "<script id=\"ssi-data\",type=\"application/json\">\n",[]),
-    io:format(Fd, "  [\n", []),    
-    lists:foreach(
-      fun(Entry) when is_map(Entry) ->
-	      io:format(Fd, "    ~s\n", [format_entry(Entry)]);
-	 (_) -> 
-	      ok
-      end, Config),
+    io:format(Fd, "  [\n", []),
+    list_rows(Fd, "    ", Config),
     io:format(Fd, "  ]\n", []),
     io:format(Fd, "</script>\n", []),
     io:format(Fd, "<script id=\"ssi-error\",type=\"application/json\">\n",[]),
@@ -198,8 +200,18 @@ list_table(Fd, Status, Config) ->
 		      [to_string(Reason)])
     end,
     io:format(Fd, "</script>\n", []).
-    
-    
+
+list_rows(Fd, Indent, Config) ->    
+    Config1 = [C || C <- Config, is_map(C)],
+    list_rows_(Fd, Indent, Config1).
+
+list_rows_(Fd, Indent, []) ->
+    ok;
+list_rows_(Fd, Indent, [E]) ->
+    io:format(Fd, Indent++"~ts\n", [format_entry(E)]);
+list_rows_(Fd, Indent, [E|Es]) ->
+    io:format(Fd, Indent++"~ts,\n", [format_entry(E)]),
+    list_rows_(Fd, Indent, Es).
 
 load_config(Filename) ->
     case consult(Filename) of
