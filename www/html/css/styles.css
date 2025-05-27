@@ -1,0 +1,101 @@
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f7f9fa;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container input {
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-container label {
+  font-size: 10px;
+  color: #a0a7b4;
+  text-transform: uppercase;
+  margin-top: 4px;
+  padding-left: 12px;
+}
+
+.actions {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  display: flex;
+  gap: 8px;
+  visibility: hidden;
+}
+
+.icon-button {
+  background: #eee;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button.confirm {
+  background-color: #007bff;
+  color: white;
+}
+
+.input-container.focused .actions {
+  visibility: visible;
+}
+
+.name-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.name-list li {
+  background: #ffffff;
+  padding: 12px 16px;
+  height: 56px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name-list li:nth-child(even) {
+  background: #f0f2f4;
+}
+
+.name-text {
+  flex-grow: 1;
+}
