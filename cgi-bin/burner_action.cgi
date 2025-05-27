@@ -11,7 +11,10 @@
 %%-module(burner_action).
 -export([main/1]).
 
--define(BURNER_CONFIG, "/var/www/data/burner.config").
+%% -define(BURNER_CONFIG, "/var/www/data/burner.config").
+%% mac os
+-define(BURNER_CONFIG, "/Library/WebServer/data/burner.config").
+
 -define(DOMAIN, "rogvall.se").
 %%-define(TMP1, "/var/www/data/tmp1.txt").
 %%-define(TMP2, "/var/www/data/tmp2.txt").

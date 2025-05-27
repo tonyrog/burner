@@ -5,8 +5,28 @@ Burner email
 
 Create temporary email addresses for infinte shopping without consequences!
 
+# mac os setup
 
-# apach(2) setup
+## enable mods
+
+## update /etc/apache2/httpd.conf
+
+Enable cgi and include mods by uncomment mod_include and mod_cgi
+
+    Load mod_include.so
+    Load mod_cgi.so
+
+## Put burner_action.cgi in cgi directory
+
+    sudo cp cgi-bin/burner_action.cgi /Library/WebServer/CGI-Excutable/
+    sudo chown root:wheel /Library/WebServer/CGI-Excutable/burner_action.cgi
+
+## Edit burner_action.cgi
+
+   -define(BURNER_CONFIG, "/Library/WebServer/data/burner.config").
+
+
+# apache(2) setup
 
 ## enable mods
 
