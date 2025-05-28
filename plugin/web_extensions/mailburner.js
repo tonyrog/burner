@@ -73,18 +73,18 @@
   }
 
   // Initial setup för redan befintliga inputs
-  document.querySelectorAll('input[type="email"]').forEach(attachToInput);
+  document.querySelectorAll('input[type="email"],input[autocomplete="email"]').forEach(attachToInput);
 
   // Övervaka DOM-förändringar
   const observer = new MutationObserver(mutations => {
     for (const mutation of mutations) {
       mutation.addedNodes.forEach(node => {
         if (node.nodeType !== 1) return; // Element nodes only
-        if (node.matches && node.matches('input[type="email"]')) {
+        if (node.matches && node.matches('input[type="email"],input[autocomplete="email"]')) {
           attachToInput(node);
         } else {
           // Kolla om det finns inputs i det nya subtree:t
-          node.querySelectorAll?.('input[type="email"]').forEach(attachToInput);
+          node.querySelectorAll?.('input[type="email"],input[autocomplete="email"]').forEach(attachToInput);
         }
       });
     }
