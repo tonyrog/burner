@@ -3,60 +3,84 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #f7f9fa;
   padding: 40px;
+  margin: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
-.input-card {
-  background: #fff;
-  padding: 24px;
+.container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.burner-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.burner-item {
+  background: #ffffff;
+  margin-bottom: 16px;
+  padding: 16px;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  width: 100%;
-  max-width: 600px;
-  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 3fr 3fr 1fr 1fr auto;
+  gap: 16px;
+  align-items: flex-end;
 }
 
-.input-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.input-container input {
-  padding: 12px 16px;
-  border-radius: 24px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  outline: none;
-}
-
-.input-container label {
+.label {
   font-size: 10px;
   color: #a0a7b4;
   text-transform: uppercase;
   margin-top: 4px;
-  padding-left: 12px;
 }
 
-.actions {
-  position: absolute;
-  right: 12px;
-  top: 8px;
+.value {
+  font-size: 14px;
+}
+
+.alias-input {
   display: flex;
-  gap: 8px;
-  visibility: hidden;
+  align-items: center;
+  gap: 4px;
+}
+
+.alias-input .prefix,
+.alias-input .suffix {
+  font-size: 14px;
+  color: #555;
+}
+
+.alias-input input[type="text"] {
+  width: 100px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+.description-block input[type="text"] {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1.5px solid #007bff;
+  outline: none;
 }
 
 .icon-button {
   background: #eee;
   border: none;
   border-radius: 50%;
+  font-size: 14px;
   width: 24px;
   height: 24px;
   cursor: pointer;
-  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,35 +91,110 @@ body {
   color: white;
 }
 
-.input-container.focused .actions {
-  visibility: visible;
+
+.flaming-burn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
 }
 
-.name-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  max-width: 600px;
+.flaming-burn img {
+  height: 28px;
+  width: auto;
 }
 
-.name-list li {
-  background: #ffffff;
-  padding: 12px 16px;
-  height: 56px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  font-size: 16px;
-  margin-bottom: 8px;
+.flaming-burn .label {
+  font-size: 10px;
+  color: #a0a7b4;
+  text-transform: uppercase;
+}
+
+
+.delete-wrap, .burn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.burn-wrap img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+
+.alias-input {
+  margin-bottom: 0.25rem;
+}
+
+
+
+
+.delete-burn-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
-.name-list li:nth-child(even) {
-  background: #f0f2f4;
+.delete-wrap, .burn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
-.name-text {
-  flex-grow: 1;
+
+/* Justera visuell position av DESCRIPTION närmare ALIAS */
+
+
+
+
+
+.description-block input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+
+
+
+.burner-item .label {
+  font-size: 11px;
+  color: #a0a7b4;
+  text-transform: uppercase;
+  margin-top: 6px;
+  line-height: 1;
+}
+
+
+/* Justera endast DESCRIPTION-rubriken */
+.description-block + .label {
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+
+/* Flytta hela DESCRIPTION-blocket lite åt vänster */
+
+
+
+/* Flytta hela DESCRIPTION-området (input + knappar + label) lite åt vänster */
+.burner-item > div:nth-child(2) {
+  transform: translateX(-10px);
+}
+
+
+/* Justera layouten för description-blocket horisontellt och flytta vänster */
+.description-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translateX(-10px);
 }

@@ -3,24 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Burner Input Field</title>
+  <title>Burner Row Layout</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" --> 
-  <div class="input-card">
-    <div class="input-container">
-      <input type="text" id="nameInput" placeholder="Add name" />
-      <label for="nameInput">NAME</label>
-      <div class="actions">
-        <button id="cancelBtn" class="icon-button">✕</button>
-        <button id="confirmBtn" class="icon-button confirm">✔</button>
-      </div>
-    </div>
+  <div class="container">
+    <ul id="burnerList" class="burner-list"></ul>
   </div>
 
-  <ul id="nameList" class="name-list"></ul>
-
+  <script type="application/json" id="ssi-data">
+<!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
+</script>
   <script src="js/script.js"></script>
 </body>
 </html>
