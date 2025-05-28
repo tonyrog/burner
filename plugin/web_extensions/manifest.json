@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "MailBurner",
+    "version": "1.0",
+
+    "description": "Manage and generate temporary email addresses.",
+
+    "icons": {
+	"48": "icons/mail-48.png",
+	"96": "icons/mail-96.png"
+    },
+
+    // matches: *://*/*
+    "content_scripts": [
+	{ "matches": ["*://*/*", "file:///*"], "js": ["mailburner.js"] }
+    ]
+}

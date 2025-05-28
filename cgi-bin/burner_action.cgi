@@ -186,12 +186,12 @@ list_config(Filename, Status) ->
 
 list_table(Fd, Status, Config) ->
     io:format(Fd, "Content-type: text/html\r\n\r\n", []),
-    io:format(Fd, "<script id=\"ssi-data\",type=\"application/json\">\n",[]),
+    io:format(Fd, "<script id=\"ssi-data\" type=\"application/json\">\n",[]),
     io:format(Fd, "  [\n", []),
     list_rows(Fd, "    ", Config),
     io:format(Fd, "  ]\n", []),
     io:format(Fd, "</script>\n", []),
-    io:format(Fd, "<script id=\"ssi-error\",type=\"application/json\">\n",[]),
+    io:format(Fd, "<script id=\"ssi-error\" type=\"application/json\">\n",[]),
     case Status of
 	ok ->
 	    io:format(Fd, "  {\"status\":\"ok\"}\n", []);
