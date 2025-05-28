@@ -11,9 +11,8 @@
     <ul id="burnerList" class="burner-list"></ul>
   </div>
 
-  <script type="application/json" id="ssi-data">
+  
 <!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
-</script>
   <script src="js/script.js"></script>
 </body>
 </html>
