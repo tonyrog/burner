@@ -61,8 +61,8 @@ run(Options) ->
 						  password => "",
 						  comment => ""}),
 			    Config1 = Config ++ [Entry],
-			    ok = save_config(burner_config(), Config1),
-			    list_config(burner_config(), ok),
+			    Status = save_config(burner_config(), Config1),
+			    list_config(burner_config(), Status),
 			    erlang:halt(0);
 			_Entry ->
 			    list_config(burner_config(), 
@@ -81,8 +81,8 @@ run(Options) ->
 					{error,"alias do not exist"});
 			_ ->
 			    Config1 = delete_alias(Alias, Config),
-			    ok = save_config(burner_config(), Config1),
-			    list_config(burner_config(), ok)
+			    Status = save_config(burner_config(), Config1),
+			    list_config(burner_config(), Status)
 		    end
 	    end;
 	"mod" ->
@@ -205,7 +205,7 @@ list_rows(Fd, Indent, Config) ->
     Config1 = [C || C <- Config, is_map(C)],
     list_rows_(Fd, Indent, Config1).
 
-list_rows_(Fd, Indent, []) ->
+list_rows_(_Fd, _Indent, []) ->
     ok;
 list_rows_(Fd, Indent, [E]) ->
     io:format(Fd, Indent++"~ts\n", [format_entry(E)]);
@@ -231,8 +231,8 @@ save_config(Filename, Config) ->
 		      io:format(Fd, "~p.\n", [Entry])
 	      end, Config),
 	    file:close(Fd);
-	{error, _} ->
-	    error
+	Error = {error, _} ->
+	    Error
     end.
 
 %% format entry as json

@@ -21,11 +21,6 @@ Enable cgi and include mods by uncomment mod_include and mod_cgi
     sudo cp cgi-bin/burner_action.cgi /Library/WebServer/CGI-Excutable/
     sudo chown root:wheel /Library/WebServer/CGI-Excutable/burner_action.cgi
 
-## Edit burner_action.cgi
-
-   -define(BURNER_CONFIG, "/Library/WebServer/data/burner.config").
-
-
 # apache(2) setup
 
 ## enable mods
