@@ -44,7 +44,7 @@ run(Options) ->
 	"list" ->
 	    list_table(standard_io, ok, Config),
 	    erlang:halt(0);
-	"add" ->
+	"add" -> %% add new alias
 	    case proplists:get_value("alias", Options) of
 		undefined ->
 		    list_config(burner_config(),
@@ -68,7 +68,7 @@ run(Options) ->
 					{error,"alias already exists"})
 		    end
 	    end;
-	"del" ->
+	"del" ->  %% delete alias
 	    case proplists:get_value("alias", Options) of
 		undefined ->
 		    list_config(burner_config(),
@@ -84,7 +84,7 @@ run(Options) ->
 			    list_config(burner_config(), Status)
 		    end
 	    end;
-	"mod" ->
+	"mod" -> %% modify alias
 	    case proplists:get_value("alias", Options) of
 		undefined ->
 		    list_config(burner_config(),
@@ -96,6 +96,22 @@ run(Options) ->
 					{error,"alias do not exist"});
 			_ ->
 			    Config1 = modify_alias(Alias, Options, Config),
+			    Status = save_config(burner_config(), Config1),
+			    list_config(burner_config(), Status)
+		    end
+	    end;
+	"set" -> %% update config
+	    case proplists:get_value("key", Options) of
+		undefined ->
+			    list_config(burner_config(),
+					{error,"set needs key and value"});
+		Key ->
+		    case proplists:get_value("value", Options) of
+			undefined ->
+			    list_config(burner_config(),
+					{error,"set needs key and value"});
+			Value ->
+			    Config1 = set_config(Key, Value, Config),
 			    Status = save_config(burner_config(), Config1),
 			    list_config(burner_config(), Status)
 		    end
@@ -178,6 +194,10 @@ modify_alias(Alias, Options, [Entry|List]) ->
     [Entry|modify_alias(Alias, Options, List)];
 modify_alias(_Alias, _Options, []) ->
     [].
+
+set_config(Key, Value, Config) ->
+    AtomKey = list_to_atom(Key),
+    lists:keystore(AtomKey, 1, Config, {AtomKey,Value}).
 
 list_config(Filename, Status) ->
     Config = load_config(Filename),

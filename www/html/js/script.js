@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("🔥 Script running");
 
   const data = JSON.parse(document.getElementById("burner-data").textContent);
+  const conf = JSON.parse(document.getElementById("burner-config").textContent);
   const list = document.getElementById("burnerList");
 
   console.log("✅ Parsed data:", data);
@@ -23,9 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
   li.innerHTML = `
     <div>
       <div class="alias-input">
-        <span class="prefix">kim.</span>
+        <span class="prefix">${conf.username}.</span>
         <input type="text" value="${entry.alias}" placeholder="alias" />
-        <span class="suffix">@rogvall.se</span>
+        <span class="suffix">@${conf.domain}</span>
       </div>
       <div class="label">BURNER ADDRESS</div>
     </div>
