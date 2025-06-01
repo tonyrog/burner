@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +12,16 @@
     <ul id="burnerList" class="burner-list"></ul>
   </div>
 
-  
-<!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
+  <!-- SSI-data-injektion -->
+  <script type="application/json" id="ssi-data">
+    <!-- SSI kommer ersätta detta block på servern -->
+  </script>
+
+  <!-- Kör server-side script baserat på query string -->
+  <!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
+
+  <!-- Renderinglogik -->
   <script src="js/script.js"></script>
-</body>
+
+  <!-- Rensar query string i URL efter att action körts --></body>
 </html>
