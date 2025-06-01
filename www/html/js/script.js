@@ -7,7 +7,7 @@ function deleteRow(button) {
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🔥 Script running");
 
-  const data = JSON.parse(document.getElementById("ssi-data").textContent);
+  const data = JSON.parse(document.getElementById("burner-data").textContent);
   const list = document.getElementById("burnerList");
 
   console.log("✅ Parsed data:", data);
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <div>
       <div class="description-block">
-        <input type="text" value="${entry.description}" />
+        <input type="text" value="${entry.comment}" />
         <button class="icon-button">✕</button>
         <button class="icon-button confirm">✔</button>
       </div>

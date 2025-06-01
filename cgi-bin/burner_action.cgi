@@ -26,8 +26,7 @@ main([]) ->
 			{error,"1,missing alias"}),
 	    erlang:halt(0);
 	[] ->
-	    list_config(burner_config(), 
-			{error,"2,missing alias"}),
+	    list_config(burner_config(), ok),
 	    erlang:halt(0);
 	_ ->
 	    Options = parse_query(string_to_unicode(Query)),
@@ -185,13 +184,24 @@ list_config(Filename, Status) ->
     list_table(standard_io, Status, Config).
 
 list_table(Fd, Status, Config) ->
+    %% Cgi return data
     io:format(Fd, "Content-type: text/html\r\n\r\n", []),
-    io:format(Fd, "<script id=\"ssi-data\" type=\"application/json\">\n",[]),
+    %% List data entry table
+    io:format(Fd, "<script id=\"burner-data\" type=\"application/json\">\n",[]),
     io:format(Fd, "  [\n", []),
     list_rows(Fd, "    ", Config),
     io:format(Fd, "  ]\n", []),
     io:format(Fd, "</script>\n", []),
-    io:format(Fd, "<script id=\"ssi-error\" type=\"application/json\">\n",[]),
+
+    %% "burner-config"
+    io:format(Fd,"<script id=\"burner-config\" type=\"application/json\">\n",
+	      []),
+    list_config(Fd, "    ", Config),
+    io:format(Fd, "</script>\n", []),
+    
+    %% "burner-status"
+    io:format(Fd,"<script id=\"burner-status\" type=\"application/json\">\n",
+	      []),
     case Status of
 	ok ->
 	    io:format(Fd, "  {\"status\":\"ok\"}\n", []);
@@ -212,6 +222,10 @@ list_rows_(Fd, Indent, [E]) ->
 list_rows_(Fd, Indent, [E|Es]) ->
     io:format(Fd, Indent++"~ts,\n", [format_entry(E)]),
     list_rows_(Fd, Indent, Es).
+
+list_config(Fd, Indent, Config) ->    
+    Config1 = [C || C <- Config, tuple_size(C) =:= 2],
+    io:format(Fd, Indent++"~ts\n", [format_config(Config1)]).
 
 load_config(Filename) ->
     case consult(Filename) of
@@ -247,11 +261,24 @@ format_entry(Entry) ->
     {{YYYY,MM,DD},{H,M,_S}} = maps:get(date, Entry),
     Date = to_binary(io_lib:format("~04w~.2.0w~.2.0w", [YYYY,MM,DD])),
     Time = to_binary(io_lib:format("~.2.0w:~.2.0w", [H,M])),
-    Dom = maps:get(site, Entry, ""),
+    Site0 = maps:get(site, Entry, ""),
 
-    Site = to_binary(Dom),
+    Site = to_binary(Site0),
     json:encode(Entry#{ alias=>Alias, date=>Date, time=>Time,
 			site=>Site, password=>Password,comment=>Comment}).
+
+%% format config as json hashmasp
+format_config(PropList) ->
+    PropList1 = 
+	lists:foldl(
+	  fun({Key,Value}, Acc) when is_atom(Value); is_list(Value) ->
+		  [{Key,to_binary(Value)}|Acc];
+	     ({Key,Value}, Acc) ->
+		  [{Key,Value} | Acc]
+	  end, [], PropList),
+    Map = maps:from_list(PropList1),
+    json:encode(Map).
+    
 
 to_binary(Value) when is_atom(Value) ->
     atom_to_binary(Value);
