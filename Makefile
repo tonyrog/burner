@@ -3,7 +3,9 @@
 #
 
 install_linux_www:
-	sudo cp -f cgi-bin/burner_action.cgi /usr/lib/cgi-bin/
+	cat cgi-bin/burner_action.cgi | sed "s@SED_THIS_ESCRIPT@`which escript`@g" > /tmp/burner_action.cgi
+	sudo cp -f /tmp/burner_action.cgi /usr/lib/cgi-bin/
+	sudo chmod 0775 /usr/lib/cgi-bin/burner_action.cgi
 	sudo cp -rf www/html/* /var/www/html/
 #
 # Install a new fresh demo burner.config
@@ -16,7 +18,9 @@ install_linux_data:
 
 
 install_macos_www:
-	sudo cp -f cgi-bin/burner_action.cgi /Library/WebServer/CGI-Executables/
+	cat cgi-bin/burner_action.cgi | sed "s@SED_THIS_ESCRIPT@`which escript`@g" > /tmp/burner_action.cgi
+	sudo cp -f /tmp/burner_action.cgi /Library/WebServer/CGI-Executables/
+	sudo chmod 0775 /Library/WebServer/CGI-Executables/burner_action.cgi
 	sudo chown root:wheel /Library/WebServer/CGI-Executables/burner_action.cgi
 	sudo cp -rf www/html/* /Library/WebServer/Documents/
 #
