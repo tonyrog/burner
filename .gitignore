@@ -1,4 +1,13 @@
-.eunit
+# macOS systemfiler
+.DS_Store
+**/.DS_Store
+
+# Tillfälliga filer och manuella anteckningar
+git commandon.txt
+
+# HTML-filer som inte ska pushas
+www/html/burner_mockup.html
+www/html/index.html.eunit
 *.o
 *.beam
 *.plt
