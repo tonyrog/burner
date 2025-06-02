@@ -1,27 +1,15 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Burner Row Layout</title>
-  <link rel="stylesheet" href="css/styles.css" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Burner Row Mockup</title>
+<link href="css/styles.css" rel="stylesheet"/>
 </head>
 <body>
-  <div class="container">
-    <ul id="burnerList" class="burner-list"></ul>
-  </div>
-
-  <!-- SSI-data-injektion -->
-  <script type="application/json" id="ssi-data">
-    <!-- SSI kommer ersätta detta block på servern -->
-  </script>
-
-  <!-- Kör server-side script baserat på query string -->
-  <!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
-
-  <!-- Renderinglogik -->
-  <script src="js/script.js"></script>
-
-  <!-- Rensar query string i URL efter att action körts --></body>
+<div class="container"><ul class="burner-list" id="burnerList"></ul></div>
+<!--#include virtual="/cgi-bin/burner_action.cgi?$QUERY_STRING" -->
+<script src="js/script.js"></script>
+</body>
 </html>

@@ -1,4 +1,4 @@
-#!/usr/bin/env escript
+#!/opt/homebrew/bin/escript
 %%% -*- erlang -*-
 %%% @author Tony Rogvall <tony@rogvall.se>
 %%% @copyright (C) 2025, Tony Rogvall
