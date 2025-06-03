@@ -1,200 +1,231 @@
 
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f7f9fa;
-  padding: 40px;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.container {
-  width: 100%;
-  max-width: 1000px;
-}
-
-.burner-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+/* === GRID DEFINITION === */
 .burner-item {
-  background: #ffffff;
-  margin-bottom: 16px;
-  padding: 16px;
+  display: grid !important;
+  grid-template-columns: 3fr 3fr 2fr 1fr 1fr 1.5fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  margin-bottom: 12px;
+  background: #f9fbfc;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  display: grid;
-  grid-template-columns: 3fr 3fr 1fr 1fr auto;
-  gap: 16px;
-  align-items: flex-end;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/* === TYPOGRAPHY + LABEL === */
 .label {
-  font-size: 10px;
-  color: #a0a7b4;
-  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
   margin-top: 4px;
+  text-align: left;
 }
 
 .value {
-  font-size: 14px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
 }
 
+/* === INPUTS === */
 .alias-input {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.alias-input .prefix,
-.alias-input .suffix {
-  font-size: 14px;
+.alias-input input {
+  max-width: 120px;
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.prefix,
+.suffix {
+  font-size: 1rem;
   color: #555;
 }
 
-.alias-input input[type="text"] {
-  width: 100px;
-  padding: 6px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* === DESCRIPTION === */
+.description-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.description-text {
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
 
+/* === TOGGLE === */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
 
-.description-block input[type="text"] {
-  flex: 1;
-  padding: 6px 10px;
-  font-size: 14px;
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
   border-radius: 20px;
-  border: 1.5px solid #007bff;
-  outline: none;
 }
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+/* === ICON === */
+.burn-icon {
+  width: 28px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.burn-cell {
+  text-align: center;
+}
+
+/* === RESPONSIVE === */
+@media screen and (max-width: 768px) {
+  .burner-item {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .icon-button {
-  background: #eee;
-  border: none;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  font-size: 14px;
-  width: 24px;
-  height: 24px;
+  border: none;
+  font-size: 16px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.icon-button.confirm {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.icon-button.cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.icon-button.confirm:hover {
+  background-color: #45a049;
+}
+
+.icon-button.cancel:hover {
+  background-color: #ccc;
+}
+
+
+.value {
+  text-align: center !important;
+  font-size: 0.95rem !important;
+  color: #555 !important;
+}
+
+.alias-input input,
+.description-block input {
+  font-size: 0.95rem !important;
+  padding: 6px 10px !important;
+  border-radius: 4px !important;
+  border: 1px solid #ccc !important;
+  max-width: 160px !important;
+  width: 160px !important;
+}
+
+.alias-input {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.prefix,
+.suffix {
+  font-size: 0.95rem !important;
+  color: #555 !important;
+}
+
+
+.burner-item > div {
+  text-align: center !important;
+}
+
+
+.burner-item .value {
+  width: 100% !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+
+.centered-block {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.icon-button.confirm {
-  background-color: #007bff;
-  color: white;
+
+.value,
+.label,
+.prefix,
+.suffix,
+input {
+  font-size: 0.95rem !important;
+  color: #777 !important;
 }
 
 
-.flaming-burn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin-left: 8px;
+/* Etiketter under (ljusgrå och små) */
+.label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 0.625rem !important; /* ≈10px */
+  color: #a0a7b4 !important;
 }
 
-.flaming-burn img {
-  height: 28px;
-  width: auto;
-}
-
-.flaming-burn .label {
-  font-size: 10px;
-  color: #a0a7b4;
-  text-transform: uppercase;
-}
-
-
-.delete-wrap, .burn-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-
-.burn-wrap img {
-  height: 28px;
-  width: auto;
-  display: block;
-}
-
-
-.alias-input {
-  margin-bottom: 0.25rem;
-}
-
-
-
-
-.delete-burn-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: flex-end;
-}
-
-.delete-wrap, .burn-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-
-/* Justera visuell position av DESCRIPTION närmare ALIAS */
-
-
-
-
-
-.description-block input[type="text"] {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-size: 14px;
-}
-
-
-
-
-.burner-item .label {
-  font-size: 11px;
-  color: #a0a7b4;
-  text-transform: uppercase;
-  margin-top: 6px;
-  line-height: 1;
-}
-
-
-/* Justera endast DESCRIPTION-rubriken */
-.description-block + .label {
-  margin-top: 4px;
-  align-self: flex-start;
-}
-
-
-/* Flytta hela DESCRIPTION-blocket lite åt vänster */
-
-
-
-/* Flytta hela DESCRIPTION-området (input + knappar + label) lite åt vänster */
-.burner-item > div:nth-child(2) {
-  transform: translateX(-10px);
-}
-
-
-/* Justera layouten för description-blocket horisontellt och flytta vänster */
-.description-block {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transform: translateX(-10px);
+/* Siffror ovan (lite större, mörkare grå) */
+.value {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 0.9375rem !important; /* ≈15px */
+  color: #444 !important;
 }
