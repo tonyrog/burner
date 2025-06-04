@@ -1,73 +1,138 @@
-
-/* === GRID DEFINITION === */
-.burner-item {
-  display: grid !important;
-  grid-template-columns: 3fr 3fr 2fr 1fr 1fr 1.5fr auto;
-  gap: 24px;
-  align-items: center;
-  padding: 24px;
-  margin-bottom: 12px;
-  background: #f9fbfc;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  background-color: #f9f9f9;
 }
 
-/* === TYPOGRAPHY + LABEL === */
-.label {
-  text-align: center;
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 4px;
+ul#burnerList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.burner-item {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.burner-item:nth-child(even) {
+  background-color: #f4f6f8;
+}
+
+.burner-item > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mer padding till DESCRIPTION-label */
+.burner-item > div:nth-child(2) .label {
+  padding-left: 2rem;
+}
+
+/* Labels: vänsterställda för alias & description */
+.burner-item > div:nth-child(1) .label,
+.burner-item > div:nth-child(2) .label {
+  text-align: left;
+  width: 100%;
+  font-size: 0.55rem;
+}
+
+.alias-input,
+.description-block,
+.description-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.description-block,
+.description-edit {
+  margin-left: 0.5rem;
+}
+
+.alias-input input,
+.description-edit input {
+  font-size: 0.95rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  width: 150px;
   text-align: left;
 }
 
-.value {
-  text-align: center;
+.alias-input .prefix,
+.alias-input .suffix {
   font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-/* === INPUTS === */
-.alias-input {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.alias-input input {
-  max-width: 120px;
-  border: 1px solid #ccc;
-  padding: 4px 6px;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.prefix,
-.suffix {
-  font-size: 1rem;
-  color: #555;
-}
-
-/* === DESCRIPTION === */
-.description-block {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #333;
 }
 
 .description-text {
   font-size: 1rem;
   color: #333;
-  cursor: pointer;
+  text-align: left;
+  width: 150px;
+  padding-left: 0.25rem;
 }
 
-/* === TOGGLE === */
+.label {
+  font-family: sans-serif;
+  font-size: 0.625rem;
+  color: #a0a7b4;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.value {
+  font-family: sans-serif;
+  font-size: 0.9375rem;
+  color: #444;
+}
+
+.icon-button {
+  background: #f2f2f2;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #555;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: #e0e0e0;
+}
+
+.icon-button.confirm.green {
+  background-color: #28a745;
+  color: white;
+}
+
+.icon-button.cancel {
+  background-color: #ccc;
+  color: #333;
+}
+
 .switch {
   position: relative;
   display: inline-block;
-  width: 36px;
-  height: 20px;
+  width: 34px;
+  height: 18px;
 }
 
 .switch input {
@@ -79,10 +144,11 @@
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
   background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 20px;
+  transition: .2s;
+  border-radius: 34px;
 }
 
 .slider:before {
@@ -90,142 +156,73 @@
   content: "";
   height: 14px;
   width: 14px;
-  left: 3px;
-  bottom: 3px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
-  transition: 0.4s;
+  transition: .2s;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #4CAF50;
+  background-color: #28a745;
 }
 
 input:checked + .slider:before {
   transform: translateX(16px);
 }
 
-/* === ICON === */
-.burn-icon {
-  width: 28px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.burn-cell {
-  text-align: center;
-}
-
-/* === RESPONSIVE === */
-@media screen and (max-width: 768px) {
-  .burner-item {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-.icon-button {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-}
-
-.icon-button.confirm {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.icon-button.cancel {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.icon-button.confirm:hover {
-  background-color: #45a049;
-}
-
-.icon-button.cancel:hover {
-  background-color: #ccc;
-}
-
-
-.value {
-  text-align: center !important;
-  font-size: 0.95rem !important;
-  color: #555 !important;
-}
-
-.alias-input input,
-.description-block input {
-  font-size: 0.95rem !important;
-  padding: 6px 10px !important;
-  border-radius: 4px !important;
-  border: 1px solid #ccc !important;
-  max-width: 160px !important;
-  width: 160px !important;
-}
-
-.alias-input {
-  display: flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-}
-
-.prefix,
-.suffix {
-  font-size: 0.95rem !important;
-  color: #555 !important;
-}
-
-
-.burner-item > div {
-  text-align: center !important;
-}
-
-
-.burner-item .value {
-  width: 100% !important;
-  text-align: center !important;
-  display: block !important;
-}
-
-
-.centered-block {
+.toggle-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-
-.value,
-.label,
-.prefix,
-.suffix,
-input {
-  font-size: 0.95rem !important;
-  color: #777 !important;
+.burn-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-/* Etiketter under (ljusgrå och små) */
-.label {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-  font-size: 0.625rem !important; /* ≈10px */
-  color: #a0a7b4 !important;
+.burn-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
 }
 
-/* Siffror ovan (lite större, mörkare grå) */
-.value {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-  font-size: 0.9375rem !important; /* ≈15px */
-  color: #444 !important;
+/* 📱 Responsiva brytpunkter */
+
+@media (max-width: 1200px) {
+  .burner-item {
+    grid-template-columns: 1fr 1fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .burner-item {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .burner-item > div {
+    align-items: flex-start;
+  }
+
+  .label, .value {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .alias-input input,
+  .description-edit input,
+  .description-text {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .burner-item {
+    padding: 0.75rem;
+    grid-template-columns: 1fr;
+  }
 }
